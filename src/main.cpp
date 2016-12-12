@@ -18,8 +18,9 @@ int main(int argc, char *argv[])
 #endif
 {
 
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
   SDL_Init(SDL_INIT_VIDEO);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
   SDL_Window *window = SDL_CreateWindow(
                                         "SDL2/OpenGL Demo", 0, 0, 640, 480,
                                         SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
