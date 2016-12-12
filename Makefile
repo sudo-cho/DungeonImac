@@ -32,6 +32,8 @@ ofiles   := $(patsubst src/%.cpp,build/%.o,$(cppfiles))
 exe      := bin/dm$(dot_exe)
 
 ifeq ($(host_os),windows)
+SHELL=cmd
+SHELLFLAGS=/c 
 ldlibs   := -lSDL2 -lopengl32
 endif
 ifeq ($(host_os),linux)
