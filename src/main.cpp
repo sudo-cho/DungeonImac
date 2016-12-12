@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
   SDL_Init(SDL_INIT_VIDEO);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
   SDL_Window *window = SDL_CreateWindow(
-                                        "SDL2/OpenGL Demo", 0, 0, 640, 480,
+                                        "SDL2/OpenGL Demo", 400, 200, 640, 480,
                                         SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
 
   SDL_GLContext glcontext = SDL_GL_CreateContext(window);

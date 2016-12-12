@@ -32,6 +32,8 @@ ofiles   := $(patsubst src/%.cpp,obj/%.o,$(cppfiles))
 exe      := bin/dungeongame$(dot_exe)
 
 ifeq ($(host_os),windows)
+SHELL=cmd
+SHELLFLAGS=/c 
 ldlibs   := -lSDL2 -lopengl32
 endif
 ifeq ($(host_os),linux)
