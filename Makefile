@@ -37,7 +37,7 @@ SHELLFLAGS=/c
 ldlibs   := -lSDL2 -lopengl32
 endif
 ifeq ($(host_os),linux)
-ldlibs   := -lSDL2 -lSDL2_image -lGL
+ldlibs   := -lSDL2 -lGL
 endif
 ifeq ($(host_os),osx)
 ldlibs   := -framework SDL2 -framework SDL2_image -framework OpenGL
