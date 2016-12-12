@@ -4,6 +4,8 @@
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
 
+#include "player.hpp"
+
 using namespace std;
 
 #ifdef _WIN32
@@ -18,6 +20,14 @@ int main(int argc, char *argv[])
 #endif
 {
 
+  Player lucas(50, 50, 1, 5);
+  Player micka(50, 35, 3, 6);
+
+  cout << "Point de vie :" << lucas.getHealth() << endl;
+
+  lucas.damageTake(&micka);
+
+  cout << "Point de vie après :" << lucas.getHealth() << endl;
 
   SDL_Init(SDL_INIT_VIDEO);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
