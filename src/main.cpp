@@ -12,6 +12,7 @@
 using namespace std;
 
 #ifdef _WIN32
+#include <windows.h>
 int CALLBACK WinMain(
                      _In_ HINSTANCE hInstance,
                      _In_ HINSTANCE hPrevInstance,
@@ -22,17 +23,27 @@ int CALLBACK WinMain(
 int main(int argc, char *argv[])
 #endif
 {
-  // initialization
-  Game game;
+	// initialization
+	Game game;
 
-  Player lucas(50, 50, 1, 5);
-  Player micka(50, 35, 3, 6);
+	Player lucas(glm::vec2(3,3),2,50, 50, 1, 5);
+	Player micka(glm::vec2(3,4),2,50, 35, 3, 6);
 
-  cout << "Point de vie :" << lucas.getHealth() << endl;
+	cout << "Point de vie :" << lucas.getHealth() << endl;
 
-  lucas.damageTake(&micka);
+	lucas.damageTake(&micka);
+	
+	cout << "Point de vie après :" << lucas.getHealth() << endl;
+  
+	TypeMonster type1("badmoon",50,50,20);
+	
+	Monster monster1(glm::vec2(5,5), 3, NULL, type1);
+	
+	monster1.changeDirection(2);
+	monster1.move();
+	
+	cout << "Position monster : " << monster1.getPos().x << "," << monster1.getPos().y << ", Direction monster : " << monster1.getDir() << endl;
 
-  cout << "Point de vie après :" << lucas.getHealth() << endl;
 
 	// Création d'un Vertex Buffer Object et d'un Vertex Array Object
 	GLuint vbo, vao;
@@ -77,18 +88,7 @@ int main(int argc, char *argv[])
 		0 /* OpenGL doit utiliser le VBO attaché à GL_ARRAY_BUFFER et commencer à l'offset 0 */);
 
 	// Plus de VAO courant:
-	glBindVertexArray(0);
-	
-	
-	TypeMonster type1("badmoon",50,50,20);
-	
-	Monster monster1(glm::vec2(5,5), 3, NULL, type1);
-	
-	monster1.changeDirection(2);
-	monster1.move();
-	
-	cout << "Position monster : " << monster1.getPos().x << "," << monster1.getPos().y << ", Direction monster : " << monster1.getDir() << endl;
-	
+	glBindVertexArray(0);	
 
 	bool _continue = true;
 	while(_continue){

@@ -1,12 +1,12 @@
 #include "player.hpp"
 
-Player::Player(int health, int gold, int potion, int weapon) :
-  health(health),
-  gold(gold),
-  potion(potion),
-  weapon(weapon)
+Player::Player(glm::vec2 pos, int dir, int health, int gold, int potion, int weapon) : MapObject (pos,dir,"player")
 {
-  id++;
+	this->health = health;
+	this->gold = gold;
+	this->potion = potion;
+	this->weapon = weapon;
+	id++;
 }
 
 void Player::decreaseHealth(int val){
