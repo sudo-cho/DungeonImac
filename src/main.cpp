@@ -1,12 +1,15 @@
 #include <iostream>
 #include <GL/glew.h>
-#include <GL/glut.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
+#include <string>
+#include "typemonster.hpp"
+#include "monster.hpp"
 
 using namespace std;
 
 #ifdef _WIN32
+#include <Windows.h>
 int CALLBACK WinMain(
                      _In_ HINSTANCE hInstance,
                      _In_ HINSTANCE hPrevInstance,
@@ -87,6 +90,17 @@ int main(int argc, char *argv[])
 
 	// Plus de VAO courant:
 	glBindVertexArray(0);
+	
+	
+	TypeMonster type1("badmoon",50,50,20);
+	
+	Monster monster1(glm::vec2(5,5), 3, NULL, type1);
+	
+	monster1.changeDirection(2);
+	monster1.move();
+	
+	cout << "Position monster : " << monster1.getPos().x << "," << monster1.getPos().y << ", Direction monster : " << monster1.getDir() << endl;
+	
 
 	bool _continue = true;
 	while(_continue){
@@ -100,7 +114,7 @@ int main(int argc, char *argv[])
 		glDrawArrays(GL_TRIANGLES,0,6);
 		glBindVertexArray(0);
 		SDL_Delay(1000/60);
-    SDL_GL_SwapWindow(window);
+		SDL_GL_SwapWindow(window);
 	}
 
   SDL_GL_DeleteContext(glcontext);
