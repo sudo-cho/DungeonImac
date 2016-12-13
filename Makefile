@@ -27,11 +27,13 @@ cxxflags := $(strip \
 	-DDM_GL_DEBUG -DGLEW_STATIC \
 )
 cppfiles := $(call rglob,src,*.cpp)
-ofiles   := $(patsubst src/%.cpp,build/%.o,$(cppfiles))
+ofiles   := $(patsubst src/%.cpp,obj/%.o,$(cppfiles))
 
-exe      := bin/dm$(dot_exe)
+exe      := bin/dungeongame$(dot_exe)
 
 ifeq ($(host_os),windows)
+SHELL=cmd
+SHELLFLAGS=/c 
 ldlibs   := -lSDL2 -lopengl32
 endif
 ifeq ($(host_os),linux)
@@ -46,7 +48,7 @@ endif
 
 all: $(exe)
 
-build/%.o: src/%.cpp
+obj/%.o: src/%.cpp
 	@$(call mkdir_p,$(@D))
 	$(cxx) $(cxxflags) -c $< -o $@
 
@@ -55,6 +57,6 @@ $(exe): $(ofiles)
 	$(cxx) $(cxxflags) $^ -o $@ $(ldlibs)
 
 clean:
-	$(call rmdir_rf,build)
+	$(call rmdir_rf,obj)
 re: clean all
 mrproper: re
