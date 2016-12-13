@@ -1,14 +1,15 @@
 #include <iostream>
 #include <GL/glew.h>
-#include <GL/glut.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
 
+#include "game.hpp"
 #include "player.hpp"
 
 using namespace std;
 
 #ifdef _WIN32
+#include <windows.h>
 int CALLBACK WinMain(
                      _In_ HINSTANCE hInstance,
                      _In_ HINSTANCE hPrevInstance,
@@ -19,6 +20,8 @@ int CALLBACK WinMain(
 int main(int argc, char *argv[])
 #endif
 {
+  // initialization
+  Game game;
 
   Player lucas(50, 50, 1, 5);
   Player micka(50, 35, 3, 6);
@@ -28,30 +31,6 @@ int main(int argc, char *argv[])
   lucas.damageTake(&micka);
 
   cout << "Point de vie après :" << lucas.getHealth() << endl;
-
-  SDL_Init(SDL_INIT_VIDEO);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-  SDL_Window *window = SDL_CreateWindow(
-                                        "SDL2/OpenGL Demo", 400, 200, 640, 480,
-                                        SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
-
-  SDL_GLContext glcontext = SDL_GL_CreateContext(window);
-
-  // Check that the window was successfully created
-  if (window == NULL) {
-    // In the case that the window could not be made...
-    printf("Could not create window: %s\n", SDL_GetError());
-    return 1;
-  }
-
-	// Initialisation de GLEW; nous verrons dans le prochain TP à quoi cela sert.
-	GLint error;
-	if(GLEW_OK != (error = glewInit())) {
-		std::cerr << "Impossible d'initialiser Glew" << std::endl;
-		return 1;
-	}
-
-  cout << glGetString(GL_VERSION) << endl;
 
 	// Création d'un Vertex Buffer Object et d'un Vertex Array Object
 	GLuint vbo, vao;
@@ -110,10 +89,9 @@ int main(int argc, char *argv[])
 		glDrawArrays(GL_TRIANGLES,0,6);
 		glBindVertexArray(0);
 		SDL_Delay(1000/60);
-    SDL_GL_SwapWindow(window);
+    SDL_GL_SwapWindow(game.window);
 	}
 
-  SDL_GL_DeleteContext(glcontext);
-	SDL_Quit();
-	return 0;
+  game.~Game();
+  return 0;
 }
