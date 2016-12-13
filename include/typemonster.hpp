@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 
-
 class TypeMonster {
 public:
 	TypeMonster(std::string,int,int,int);
@@ -11,5 +10,5 @@ public:
 	int health;
 	int gold;
 	int force;
-	
+
 };

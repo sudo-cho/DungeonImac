@@ -23,7 +23,7 @@ endif
 
 cxx      := g++
 cxxflags := $(strip \
-	$(cxxarch) -std=c++11 -Wall -pedantic -Iinclude -g -Og \
+	$(cxxarch) -std=c++11 -Wall -pedantic -Iinclude -g  \
 	-DDM_GL_DEBUG -DGLEW_STATIC \
 )
 cppfiles := $(call rglob,src,*.cpp)
@@ -40,7 +40,7 @@ ifeq ($(host_os),linux)
 ldlibs   := -lSDL2 -lGL
 endif
 ifeq ($(host_os),osx)
-ldlibs   := -framework SDL2 -framework SDL2_image -framework OpenGL
+ldlibs   := -framework SDL2 -framework OpenGL
 endif
 
 

@@ -13,5 +13,5 @@ public:
 	glm::vec2 position;
 	int direction;
 	std::string type;
-	
+
 };
