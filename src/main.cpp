@@ -5,6 +5,7 @@
 #include <string>
 #include "typemonster.hpp"
 #include "monster.hpp"
+#include "level.hpp"
 
 #include "game.hpp"
 #include "player.hpp"
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
 {
 	// initialization
 	Game game;
-
+/*
 	Player lucas(glm::vec2(3,3),2,50, 50, 1, 5);
 	Player micka(glm::vec2(3,4),2,50, 35, 3, 6);
 
@@ -42,7 +43,9 @@ int main(int argc, char *argv[])
 	monster1.changeDirection(2);
 	monster1.move();
 	
-	cout << "Position monster : " << monster1.getPos().x << "," << monster1.getPos().y << ", Direction monster : " << monster1.getDir() << endl;
+	cout << "Position monster : " << monster1.getPos().x << "," << monster1.getPos().y << ", Direction monster : " << monster1.getDir() << endl;*/
+	
+	Level level((string)"../levels/level1.ppm");
 
 
 	// Création d'un Vertex Buffer Object et d'un Vertex Array Object
