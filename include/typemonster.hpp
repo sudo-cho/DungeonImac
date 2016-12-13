@@ -1,9 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <glm/glm/glm.hpp>
 #include <string>
-
 
 class TypeMonster {
 public:
@@ -12,5 +10,5 @@ public:
 	int health;
 	int gold;
 	int force;
-	
+
 };

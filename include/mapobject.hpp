@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <glm/glm/glm.hpp>
+#include <glm/glm.hpp>
 #include <string>
 
 
@@ -12,5 +12,5 @@ public:
 	glm::vec2 position;
 	int direction;
 	std::string type;
-	
+
 };
