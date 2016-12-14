@@ -41,8 +41,8 @@ Game::~Game(){
 
 void Game::initProgram(Program *program, GLuint locationMVPMatrix,GLuint locationMVMatrix, GLuint locationNormalMatrix){
   *program = loadProgram(
-                         "../assets/shaders/3D.vs.glsl",
-                         "../assets/shaders/normals.fs.glsl"
+                         "assets/shaders/3D.vs.glsl",
+                         "assets/shaders/normals.fs.glsl"
                          );
   program->use();
 
@@ -50,5 +50,4 @@ void Game::initProgram(Program *program, GLuint locationMVPMatrix,GLuint locatio
   locationMVMatrix = glGetUniformLocation(program->getGLId(), "uMVMatrix");
   locationNormalMatrix = glGetUniformLocation(program->getGLId(), "uNormalMatrix");
 
-  assert(locationNormalMatrix != 1);
 }
