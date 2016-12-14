@@ -48,10 +48,6 @@ int main(int argc, char *argv[])
   game.initProgram(&program, locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
 
 
-	Level level((string)"../assets/level1.dml");
-
-	//level.printLevelTest();
-
   Sphere sphere(1, 32, 16);
   SphereDraw objectSphere(&sphere);
 
