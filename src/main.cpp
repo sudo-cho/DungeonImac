@@ -30,26 +30,27 @@ int main(int argc, char *argv[])
 {
 	// initialization
 	Game game;
-	
+
 	Level level((string)"assets/level1.dml");
-	
+
 	cout << level.monsters.size() << endl;
-	
+
 	for (int i=0; i<(int)level.monsters.size(); i++){
 		cout << level.monsters[i].type.name << endl;
 	}
-	
+
 	//level.printLevelTest();
 
   Program program;
 
   GLuint locationMVPMatrix = 0, locationMVMatrix = 0, locationNormalMatrix = 0;
 
-  game.initProgram(&program, locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
+  //game.initProgram(&program, locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
 
+  // Sphere sphere(1, 32, 16);
+  // SphereDraw objectSphere(&sphere);
 
-  Sphere sphere(1, 32, 16);
-  SphereDraw objectSphere(&sphere);
+  WallDraw objectwall;
 
 	bool _continue = true;
 	while(_continue){
@@ -64,7 +65,7 @@ int main(int argc, char *argv[])
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    objectSphere.drawSphere(&sphere, locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
+    objectwall.drawWall(locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
 
     SDL_Delay(1000/60);
 		SDL_GL_SwapWindow(game.window);
