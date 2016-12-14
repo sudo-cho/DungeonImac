@@ -6,8 +6,8 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
-#include "MapObject.hpp"
-#include "TypeMonster.hpp"
+#include "mapobject.hpp"
+#include "typemonster.hpp"
 
 
 class Monster : public MapObject {
@@ -21,8 +21,6 @@ public:
 	int attack();
 	glm::vec2 getPos();
 	int getDir();
-
-private:
-	TypeMonster * type;
+	TypeMonster type;
 	GLuint texture;
 };

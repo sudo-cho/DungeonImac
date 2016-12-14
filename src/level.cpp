@@ -56,7 +56,9 @@ void Level::createObjectFromLine(int type, string line){
 	else if (type == monster){
 		vector<string> MonsterDetails = split(line, ':');
 		// chargement texture
-		//monsters.push_back(Monster(glm::vec2(MonsterDetails[1],MonsterDetails[2]),
+		GLuint * texture = NULL;
+		TypeMonster typeMons(MonsterDetails[4],stoi(MonsterDetails[5]),stoi(MonsterDetails[6]),stoi(MonsterDetails[7]));
+		monsters.push_back(Monster(glm::vec2(stoi(MonsterDetails[1]),stoi(MonsterDetails[2])),stoi(MonsterDetails[3]),texture,typeMons));
 	}
 	else if (type == trap){
 	

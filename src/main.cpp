@@ -43,7 +43,13 @@ int main(int argc, char *argv[])
 	
 	cout << "Position monster : " << monster1.getPos().x << "," << monster1.getPos().y << ", Direction monster : " << monster1.getDir() << endl;*/
 	
-	Level level((string)"../assets/level1.dml");
+	Level level((string)"assets/level1.dml");
+	
+	cout << level.monsters.size() << endl;
+	
+	for (int i=0; i<(int)level.monsters.size(); i++){
+		cout << level.monsters[i].type.name << endl;
+	}
 	
 	//level.printLevelTest();
 
