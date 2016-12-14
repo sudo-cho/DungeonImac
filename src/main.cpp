@@ -8,9 +8,10 @@
 
 #include "typemonster.hpp"
 #include "monster.hpp"
+#include "level.hpp"
+
 #include "game.hpp"
 #include "player.hpp"
-#include "draw.hpp"
 
 using namespace std;
 using namespace glimac;
@@ -30,15 +31,17 @@ int main(int argc, char *argv[])
 	// initialization
 	Game game;
   Program program;
+
   GLuint locationMVPMatrix = 0, locationMVMatrix = 0, locationNormalMatrix = 0;
 
   game.initProgram(&program, locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
 
+/*
 	Player lucas(glm::vec2(3,3),2,50, 50, 1, 5);
 	Player micka(glm::vec2(3,4),2,50, 35, 3, 6);
-
 	cout << "Point de vie :" << lucas.getHealth() << endl;
 	lucas.damageTake(&micka);
+
 	cout << "Point de vie après :" << lucas.getHealth() << endl;
 
 	TypeMonster type1("badmoon",50,50,20);
@@ -48,8 +51,22 @@ int main(int argc, char *argv[])
 	monster1.changeDirection(2);
 	monster1.move();
 
-
 	cout << "Position monster : " << monster1.getPos().x << "," << monster1.getPos().y << ", Direction monster : " << monster1.getDir() << endl;
+*/
+
+	Level level((string)"../assets/level1.dml");
+
+	//level.printLevelTest();
+
+
+	// Création d'un Vertex Buffer Object et d'un Vertex Array Object
+	GLuint vbo, vao;
+
+	// Allocation d'un Vertex Buffer Object:
+	glGenBuffers(1, &vbo);
+
+	// "vbo" devient le VBO courant sur la cible GL_ARRAY_BUFFER:
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
   Sphere sphere(1, 32, 16);
   SphereDraw objectSphere(&sphere);
@@ -71,6 +88,7 @@ int main(int argc, char *argv[])
     SDL_Delay(1000/60);
 		SDL_GL_SwapWindow(game.window);
 	}
+
   game.~Game();
   return 0;
-}
+
