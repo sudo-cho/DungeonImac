@@ -6,7 +6,7 @@
 #include <sstream>
 #include <vector>
 #include "monster.hpp"
-#include "Case.hpp"
+#include "case.hpp"
 
 enum typeMapObject {chest = 1, monster = 2, trap = 3, lever = 4};
 
