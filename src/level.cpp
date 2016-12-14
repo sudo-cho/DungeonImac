@@ -19,14 +19,61 @@ std::vector<string> split(const string &s, char delim) {
 }
 
 
-Level::Level(string imageFile){
-    ifstream image(imageFile);	
+Level::Level(string fileName){
+    ifstream file(fileName);
+	
+	string line, imageFile;
+	int nLine=0, nObj=0, nLineObj = 0;
+	vector<string> ObjectDetails;
+	int typeMObject;
+	
+	while (getline(file,line)){
+		if (nLine == 0) typeMObject = 0;
+		else if (nLine == 1) imageFile = line;
+		else if (nLine == 2 || nLineObj == nObj +1) {
+			typeMObject++;
+			nObj = stoi(line);
+			nLineObj = 1;
+		}
+		else {
+			createObjectFromLine(typeMObject,line);
+			nLineObj++;
+		}
+		nLine++;
+	}
+	
+	readImageFile(imageFile);
+	
+}
+
+Level::~Level(){
+}
+
+void Level::createObjectFromLine(int type, string line){
+	if (type == chest){
+		
+	}
+	else if (type == monster){
+		vector<string> MonsterDetails = split(line, ':');
+		// chargement texture
+		//monsters.push_back(Monster(glm::vec2(MonsterDetails[1],MonsterDetails[2]),
+	}
+	else if (type == trap){
+	
+	}
+	else if (type == lever){
+	
+	}
+}
+
+void Level::readImageFile(string imageFile){
+	ifstream image(imageFile);	
 
 	string line;
 	int i=0, j=0, width=0, height=0;
 	vector<string> widthHeight;
-	vector<vector<string>> elems;
-	vector<string> elemsLine;
+	vector<vector<int>> elems;
+	vector<int> elemsLine;
 	
 	while (getline(image,line)){
 		if (i==0 && line.compare("P3")) break;
@@ -37,24 +84,43 @@ Level::Level(string imageFile){
 		}
 		if (i > 3){
 			if ( i == j-2) {
-				elemsLine.push_back(line);
+				elemsLine.push_back(stoi(line));
 				i+=3;
 				elems.push_back(elemsLine);
+				elemsLine.clear();
 			}
 			else {
-				elemsLine.push_back(line);
+				elemsLine.push_back(stoi(line));
 			}
 		}
 		else {i++;}
 		j++;
 	}
 	
-	cout << "width = " << width << ", height = " << height << endl;
-	cout << "nbCases = " << elemsLine.size() << endl;
+	int row = 0, col = 0;
+	for (int n = 0 ; n < (int)elems.size() ; n++){
+		if (elems[n][0] == 0 && elems[n][1] == 0 && elems[n][2] == 0) map.push_back(Case(glm::vec2(row,col), empty));
+		else if (elems[n][0] == 255 && elems[n][1] == 255 && elems[n][2] == 255) map.push_back(Case(glm::vec2(row,col), path));
+		else if (elems[n][0] == 255 && elems[n][1] == 0 && elems[n][2] == 0) {
+			map.push_back(Case(glm::vec2(row,col), in));
+			begin = Case(glm::vec2(row,col),in);
+		}
+		else if (elems[n][0] == 6 && elems[n][1] == 255 && elems[n][2] == 0) {
+			map.push_back(Case(glm::vec2(row,col), out));
+			end = Case(glm::vec2(row,col),out);
+		}
+		col = (n-row)/(width);
+		if (row == width -1) row = 0;
+		else row++;
+	}
 	
+	this->width = width;
+	this->height = height;
 }
 
-Level::~Level(){
+void Level::printLevelTest(){
+	for (int n=0 ; n < (int)map.size() ; n++){
+		cout << map[n].type ;
+		if (map[n].position.x == width-1) cout << endl;
+	}
 }
-
-

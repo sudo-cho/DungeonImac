@@ -43,7 +43,9 @@ int main(int argc, char *argv[])
 	
 	cout << "Position monster : " << monster1.getPos().x << "," << monster1.getPos().y << ", Direction monster : " << monster1.getDir() << endl;*/
 	
-	Level level((string)"../levels/level1.ppm");
+	Level level((string)"../assets/level1.dml");
+	
+	//level.printLevelTest();
 
 
 	// Création d'un Vertex Buffer Object et d'un Vertex Array Object

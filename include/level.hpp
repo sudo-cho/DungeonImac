@@ -3,31 +3,30 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <glm/glm.hpp>
 #include <sstream>
 #include <vector>
+#include "Monster.hpp"
+#include "Case.hpp"
 
-struct Case {
-	glm::vec2 position;
-	enum typeCase { empty = 0, path = 1, in = 2, out = 3};
-};
-
-struct PPMObject {
-  std::string magicNum;
-  int width, height, maxColVal;
-  char * m_Ptr;
-};
+enum typeMapObject {chest = 1, monster = 2, trap = 3, lever = 4};
 
 class Level {
 public:
 	Level(std::string);
 	~Level();
+	void printLevelTest();
+	void readImageFile(std::string);
+	void createObjectFromLine(int,std::string);
 
 private:
+	int width;
+	int height;
+	int nbChests;
+	int nbMonsters;
 	Case begin;
 	Case end;
-	//Case[] map;
-	//Monster[] monsters;
+	std::vector<Case> map;
+	std::vector<Monster> monsters;
 	//Chest[] chests;
 	//Trap[] traps;
 };
