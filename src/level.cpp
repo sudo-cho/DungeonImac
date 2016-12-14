@@ -51,7 +51,11 @@ Level::~Level(){
 
 void Level::createObjectFromLine(int type, string line){
 	if (type == chest){
-		
+		vector<string> ChestDetails = split(line, ':');
+		// chargement texture
+		GLuint * texture = NULL;
+		ObjectCollectable content(stoi(ChestDetails[5]),stoi(ChestDetails[6]),ChestDetails[4]);
+		chests.push_back(Chest(glm::vec2(stoi(ChestDetails[1]),stoi(ChestDetails[2])),stoi(ChestDetails[3]),texture,content));
 	}
 	else if (type == monster){
 		vector<string> MonsterDetails = split(line, ':');
