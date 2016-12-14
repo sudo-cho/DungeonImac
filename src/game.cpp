@@ -2,15 +2,19 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
-
+#include <glimac/Program.hpp>
+#include <glimac/FilePath.hpp>
+#include <assert.h>
 #include "game.hpp"
+
+using namespace glimac;
 
 Game::Game(){
   SDL_Init(SDL_INIT_VIDEO);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
   this->window = SDL_CreateWindow(
-                                        "SDL2/OpenGL Demo", 400, 200, 640, 480,
+                                        "Dungeon Master IMAC", 400, 200, 640, 640,
                                         SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
 
   // Check that the window was successfully created
@@ -33,4 +37,17 @@ Game::Game(){
 Game::~Game(){
   SDL_GL_DeleteContext(this->glcontext);
 	SDL_Quit();
+}
+
+void Game::initProgram(Program *program, GLuint locationMVPMatrix,GLuint locationMVMatrix, GLuint locationNormalMatrix){
+  *program = loadProgram(
+                         "assets/shaders/3D.vs.glsl",
+                         "assets/shaders/normals.fs.glsl"
+                         );
+  program->use();
+
+  locationMVPMatrix = glGetUniformLocation(program->getGLId(), "uMVPMatrix");
+  locationMVMatrix = glGetUniformLocation(program->getGLId(), "uMVMatrix");
+  locationNormalMatrix = glGetUniformLocation(program->getGLId(), "uNormalMatrix");
+
 }
