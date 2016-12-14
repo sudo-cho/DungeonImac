@@ -25,3 +25,14 @@ public:
 
   void drawSphere(Sphere*, GLuint, GLuint, GLuint);
 };
+
+class WallDraw{
+public:
+  GLuint vbo, vao;
+  glm::mat4 ProjMatrix, MVPMatrix, MVMatrix, NormalMatrix;
+
+  WallDraw();
+  ~WallDraw();
+
+  void drawWall(GLuint, GLuint, GLuint);
+};
