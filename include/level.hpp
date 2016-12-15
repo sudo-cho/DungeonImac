@@ -7,6 +7,7 @@
 #include <vector>
 #include "monster.hpp"
 #include "case.hpp"
+#include "chest.hpp"
 
 enum typeMapObject {chest = 1, monster = 2, trap = 3, lever = 4};
 
@@ -25,6 +26,6 @@ public:
 	Case end;
 	std::vector<Case> map;
 	std::vector<Monster> monsters;
-	//Chest[] chests;
+	std::vector<Chest> chests;
 	//Trap[] traps;
 };

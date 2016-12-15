@@ -41,16 +41,18 @@ int main(int argc, char *argv[])
 
 	//level.printLevelTest();
 
+	glEnable(GL_DEPTH_TEST);
+
   Program program;
 
   GLuint locationMVPMatrix = 0, locationMVMatrix = 0, locationNormalMatrix = 0;
 
-  //game.initProgram(&program, locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
+  game.initProgram(&program, locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
 
   // Sphere sphere(1, 32, 16);
   // SphereDraw objectSphere(&sphere);
 
-  WallDraw wall1;
+  WallDraw objectwall;
 
 	bool _continue = true;
 	while(_continue){
