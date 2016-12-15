@@ -111,7 +111,7 @@ void Level::readImageFile(string imageFile){
 			map.push_back(Case(glm::vec2(row,col), in));
 			begin = Case(glm::vec2(row,col),in);
 		}
-		else if (elems[n][0] == 6 && elems[n][1] == 255 && elems[n][2] == 0) {
+		else if (elems[n][0] == 0 && elems[n][1] == 255 && elems[n][2] == 0) {
 			map.push_back(Case(glm::vec2(row,col), out));
 			end = Case(glm::vec2(row,col),out);
 		}
