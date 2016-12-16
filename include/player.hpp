@@ -1,9 +1,6 @@
 #pragma once
 
-class MapObject{
-public:
-  int id;
-};
+#include "mapobject.hpp"
 
 class Player : public MapObject{
 private:
@@ -12,7 +9,7 @@ private:
   int potion;
   int weapon;
 public:
-  Player(int health, int gold, int potion, int weapon);
+  Player(glm::vec2 pos, int dir, int health, int gold, int potion, int weapon);
 
   /* getters */
   int getHealth();
