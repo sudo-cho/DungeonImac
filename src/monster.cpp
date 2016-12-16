@@ -8,7 +8,7 @@ Monster::Monster(glm::vec2 pos, int dir, GLuint * tex, TypeMonster typeMons) : M
 	position = pos;
 	direction = dir;
 	if (tex != NULL) texture = *tex;
-	type = &typeMons;
+	type = typeMons;
 }
 
 Monster::~Monster(){
@@ -46,17 +46,17 @@ int Monster::changeDirection(int dir){
 }
 
 void Monster::modifyHealth(int h){
-	type->health -= h;
+	type.health -= h;
 }
 
 int Monster::die(){
 	//animation
-	return type->gold;
+	return type.gold;
 }
 
 int Monster::attack(){
 	//animation
-	return type->force;
+	return type.force;
 }
 
 glm::vec2 Monster::getPos(){

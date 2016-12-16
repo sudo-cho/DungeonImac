@@ -11,16 +11,17 @@ using namespace glimac;
 
 ObjectDraw::ObjectDraw(){
   /* VERTEX BUFFER OBJECT */
+
 	glGenBuffers(1, &this->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 
 	GLfloat vertices[] = {
-		-0.5, -0.5,
-		0.5, -0.5,
-		0., 0.5,
+		-0.5f, -0.5f,
+		0.5f, -0.5f,
+		0.f, 0.5f
 	};
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -28,28 +29,20 @@ ObjectDraw::ObjectDraw(){
 	glGenVertexArrays(1, &this->vao);
 	glBindVertexArray(this->vao);
 
-	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(
-                        0,
-                        2,
-                        GL_FLOAT,
-                        GL_FALSE,
-                        2 * sizeof(GLfloat),
-                        0
-                        );
-
+	
+	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+	glVertexAttribPointer(0, 2, GL_FLOAT,GL_FALSE, 2 * sizeof(GLfloat), 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
 	glBindVertexArray(0);
 
-  /* TEXTURES */
-
-  }
+}
 
 void ObjectDraw::drawObject(){
   glBindVertexArray(this->vao);
 
-  glDrawArrays(GL_TRIANGLES,0,6);
+  glDrawArrays(GL_TRIANGLES,0,3);
 
   glBindVertexArray(0);
 }
@@ -152,4 +145,64 @@ void SphereDraw::drawSphere(Sphere *sphere, GLuint locationMVPMatrix, GLuint loc
 SphereDraw::~SphereDraw(){
   glDeleteBuffers(1, &this->vbo);
   glDeleteVertexArrays(1, &this->vao);
+}
+
+
+WallDraw::WallDraw(){
+  glGenBuffers(1, &this->vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+
+  GLfloat vertices [] = {
+    -0.5f,-0.5f,
+    0.5f,-0.5f,
+    -0.5f,0.5f,
+    0.5f,0.5f
+  };
+
+  glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
+
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+  glGenVertexArrays(1, &this->vao);
+  glBindVertexArray(this->vao);
+  
+  //const GLuint VERTEX_ATTR_POSITION = 0;
+  //glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+  
+  glEnableVertexAttribArray(0);
+  
+  glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+
+  /*const GLuint VERTEX_ATTR_NORMAL = 1;
+  glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
+  glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
+
+  const GLuint VERTEX_ATTR_TEXCOORDS = 2;
+  glEnableVertexAttribArray(VERTEX_ATTR_TEXCOORDS);
+  glVertexAttribPointer(VERTEX_ATTR_TEXCOORDS, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);*/
+
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindVertexArray(0);
+}
+
+WallDraw::~WallDraw() {
+  glDeleteBuffers(1, &this->vbo);
+  glDeleteVertexArrays(1, &this->vao);
+}
+
+void WallDraw::drawWall(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuint locationNormalMatrix){
+
+  glBindVertexArray(this->vao);
+  
+  //MVMatrix = glm::rotate(MVMatrix, 1, glm::vec3(0, 1, 0));
+
+  //glUniformMatrix4fv(locationMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix) );
+  //glUniformMatrix4fv(locationMVMatrix, 1, GL_FALSE, glm::value_ptr(this->MVMatrix));
+  //glUniformMatrix4fv(locationNormalMatrix, 1, GL_FALSE, glm::value_ptr(this->NormalMatrix));
+
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+  glBindVertexArray(0);
+
 }

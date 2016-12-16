@@ -51,12 +51,18 @@ Level::~Level(){
 
 void Level::createObjectFromLine(int type, string line){
 	if (type == chest){
-		
+		vector<string> ChestDetails = split(line, ':');
+		// chargement texture
+		GLuint * texture = NULL;
+		ObjectCollectable content(stoi(ChestDetails[5]),stoi(ChestDetails[6]),ChestDetails[4]);
+		chests.push_back(Chest(glm::vec2(stoi(ChestDetails[1]),stoi(ChestDetails[2])),stoi(ChestDetails[3]),texture,content));
 	}
 	else if (type == monster){
 		vector<string> MonsterDetails = split(line, ':');
 		// chargement texture
-		//monsters.push_back(Monster(glm::vec2(MonsterDetails[1],MonsterDetails[2]),
+		GLuint * texture = NULL;
+		TypeMonster typeMons(MonsterDetails[4],stoi(MonsterDetails[5]),stoi(MonsterDetails[6]),stoi(MonsterDetails[7]));
+		monsters.push_back(Monster(glm::vec2(stoi(MonsterDetails[1]),stoi(MonsterDetails[2])),stoi(MonsterDetails[3]),texture,typeMons));
 	}
 	else if (type == trap){
 	
@@ -105,7 +111,7 @@ void Level::readImageFile(string imageFile){
 			map.push_back(Case(glm::vec2(row,col), in));
 			begin = Case(glm::vec2(row,col),in);
 		}
-		else if (elems[n][0] == 6 && elems[n][1] == 255 && elems[n][2] == 0) {
+		else if (elems[n][0] == 0 && elems[n][1] == 255 && elems[n][2] == 0) {
 			map.push_back(Case(glm::vec2(row,col), out));
 			end = Case(glm::vec2(row,col),out);
 		}
