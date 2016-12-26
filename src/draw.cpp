@@ -186,6 +186,10 @@ WallDraw::WallDraw(){
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
+  
+  ProjMatrix = glm::perspective (glm::radians(70.f),(float)800/600,0.1f,100.f);
+  MVMatrix = glm::translate (glm::mat4(1.f), glm::vec3(0.f,0.f,-5.f));
+  NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 }
 
 WallDraw::~WallDraw() {
@@ -193,15 +197,33 @@ WallDraw::~WallDraw() {
   glDeleteVertexArrays(1, &this->vao);
 }
 
+glm::mat3 translate(float tx, float ty) {
+	glm::mat3 M = glm::mat3(glm::vec3(1,0,0), glm::vec3(0,1,0), glm::vec3(tx,ty,1));
+	return M;
+}
+
+glm::mat3 scale(float tx, float ty) {
+	glm::mat3 M = glm::mat3(glm::vec3(tx,0,0), glm::vec3(0,ty,0), glm::vec3(0,0,1));
+	return M;
+}
+
+glm::mat3 rotate(float a) {
+	glm::mat3 M = glm::mat3(glm::vec3(cos(a),-sin(a),0), glm::vec3(sin(a),cos(a),0), glm::vec3(0,0,1));
+	return M;
+}
+
 void WallDraw::drawWall(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuint locationNormalMatrix){
 
   glBindVertexArray(this->vao);
   
-  //MVMatrix = glm::rotate(MVMatrix, 1, glm::vec3(0, 1, 0));
+  MVMatrix = glm::translate (glm::mat4(1.f), glm::vec3(0.f,0.f,-5.f));
+  MVMatrix = glm::rotate(MVMatrix, 45.f, glm::vec3(0, 0, 1));
+  
+  //MVMatrix = glm::rotate(MVMatrix, window.getTime(), glm::vec3(0, 1, 0));
 
-  //glUniformMatrix4fv(locationMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix) );
-  //glUniformMatrix4fv(locationMVMatrix, 1, GL_FALSE, glm::value_ptr(this->MVMatrix));
-  //glUniformMatrix4fv(locationNormalMatrix, 1, GL_FALSE, glm::value_ptr(this->NormalMatrix));
+  glUniformMatrix4fv(locationMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
+  glUniformMatrix4fv(locationMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
+  glUniformMatrix4fv(locationNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 

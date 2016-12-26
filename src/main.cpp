@@ -32,14 +32,15 @@ int main(int argc, char *argv[])
 	Game game;
 
 	Level level((string)"assets/level1.dml");
-
+	// tests
+	/*
 	cout << level.monsters.size() << endl;
 
 	for (int i=0; i<(int)level.monsters.size(); i++){
 		cout << level.monsters[i].type.name << endl;
 	}
 
-	//level.printLevelTest();
+	level.printLevelTest();*/
 	
 	glEnable(GL_DEPTH_TEST);
 

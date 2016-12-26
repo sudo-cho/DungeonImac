@@ -46,8 +46,8 @@ void Game::initProgram(Program *program, GLuint locationMVPMatrix,GLuint locatio
                          );
   program->use();
 
-  //locationMVPMatrix = glGetUniformLocation(program->getGLId(), "uMVPMatrix");
-  //locationMVMatrix = glGetUniformLocation(program->getGLId(), "uMVMatrix");
-  //locationNormalMatrix = glGetUniformLocation(program->getGLId(), "uNormalMatrix");
+  locationMVPMatrix = glGetUniformLocation(program->getGLId(), "uMVPMatrix");
+  locationMVMatrix = glGetUniformLocation(program->getGLId(), "uMVMatrix");
+  locationNormalMatrix = glGetUniformLocation(program->getGLId(), "uNormalMatrix");
 
 }

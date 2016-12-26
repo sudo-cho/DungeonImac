@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/gl.h>
+#include <SDL2/SDL.h>
 #include <glimac/common.hpp>
 #include <glimac/Sphere.hpp>
 
