@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
   // Sphere sphere(1, 32, 16);
   // SphereDraw objectSphere(&sphere);
-  
+
   WallDraw objectwall;
 
 	bool _continue = true;
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    objectwall.drawWall(locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
+    wall1.drawWall(locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
 
     SDL_Delay(1000/60);
 		SDL_GL_SwapWindow(game.window);

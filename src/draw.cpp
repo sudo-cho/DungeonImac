@@ -37,9 +37,7 @@ ObjectDraw::ObjectDraw(){
 	
 	glBindVertexArray(0);
 
-  /* TEXTURES */
-
-  }
+}
 
 void ObjectDraw::drawObject(){
   glBindVertexArray(this->vao);
