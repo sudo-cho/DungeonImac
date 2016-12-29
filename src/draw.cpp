@@ -153,10 +153,10 @@ WallDraw::WallDraw(){
   glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 
   GLfloat vertices [] = {
-    -0.1f,-0.1f,
-    0.1f,-0.1f,
-    -0.1f,0.1f,
-    0.1f,0.1f
+    -0.5f,-0.5f,
+    0.5f,-0.5f,
+    -0.5f,0.5f,
+    0.5f,0.5f
   };
   /*
   -1.f,-1.f,
@@ -245,10 +245,34 @@ void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuin
 			WallDraw path;
 			int translateZ = level.begin.position.x - level.map[i].position.x;
 			int translateX = level.begin.position.y - level.map[i].position.y;
-			//std::cout << "Z = " << translateZ << ", X = " << translateX << std::endl;
 			MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,-0.5f,translateZ));
-			MVMat = glm::rotate(MVMat, 90.f, glm::vec3(1, 0, 0));
+			// rotate 1.5708f : 90 degrés
+			MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(1, 0, 0));
 			path.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
+			
+			// dessin murs
+			if (level.map[i-1].type == 0){
+				WallDraw pathWall;
+				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ + 0.5f));
+				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
+			}
+			if (level.map[i+1].type == 0){
+				WallDraw pathWall;
+				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ));
+				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
+			}
+			if (level.map[i-level.width].type == 0){
+				WallDraw pathWall;
+				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX - 0.5f,0.f,translateZ));
+				MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
+			}
+			if (level.map[i+level.width].type == 0){
+				WallDraw pathWall;
+				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX + 0.5f,0.f,translateZ));
+				MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
+			}
 		}
 	}
 }
