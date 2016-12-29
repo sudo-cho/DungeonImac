@@ -39,15 +39,15 @@ Game::~Game(){
 	SDL_Quit();
 }
 
-void Game::initProgram(Program *program, GLuint locationMVPMatrix,GLuint locationMVMatrix, GLuint locationNormalMatrix){
+void Game::initProgram(Program *program, GLuint * locationMVPMatrix,GLuint * locationMVMatrix, GLuint * locationNormalMatrix){
   *program = loadProgram(
                          "assets/shaders/3D.vs.glsl",
                          "assets/shaders/normals.fs.glsl"
                          );
   program->use();
 
-  locationMVPMatrix = glGetUniformLocation(program->getGLId(), "uMVPMatrix");
-  locationMVMatrix = glGetUniformLocation(program->getGLId(), "uMVMatrix");
-  locationNormalMatrix = glGetUniformLocation(program->getGLId(), "uNormalMatrix");
+  *locationMVPMatrix = glGetUniformLocation(program->getGLId(), "uMVPMatrix");
+  *locationMVMatrix = glGetUniformLocation(program->getGLId(), "uMVMatrix");
+  *locationNormalMatrix = glGetUniformLocation(program->getGLId(), "uNormalMatrix");
 
 }

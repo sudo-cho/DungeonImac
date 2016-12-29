@@ -15,7 +15,7 @@ public:
   Game();
   ~Game();
 
-  void initProgram(Program*, GLuint, GLuint, GLuint);
+  void initProgram(Program*, GLuint *, GLuint *, GLuint *);
 
 };
 

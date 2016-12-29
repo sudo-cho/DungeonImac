@@ -153,11 +153,16 @@ WallDraw::WallDraw(){
   glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 
   GLfloat vertices [] = {
-    -0.5f,-0.5f,
-    0.5f,-0.5f,
-    -0.5f,0.5f,
-    0.5f,0.5f
+    -0.1f,-0.1f,
+    0.1f,-0.1f,
+    -0.1f,0.1f,
+    0.1f,0.1f
   };
+  /*
+  -1.f,-1.f,
+    1.f,-1.f,
+    -1.f,1.f,
+    1.f,1.f*/
 
   glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
 
@@ -186,7 +191,6 @@ WallDraw::WallDraw(){
   glBindVertexArray(0);
   
   ProjMatrix = glm::perspective (glm::radians(70.f),(float)800/600,0.1f,100.f);
-  MVMatrix = glm::translate (glm::mat4(1.f), glm::vec3(0.f,0.f,-5.f));
   NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 }
 
@@ -210,14 +214,11 @@ glm::mat3 rotate(float a) {
 	return M;
 }
 
-void WallDraw::drawWall(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuint locationNormalMatrix){
+void WallDraw::drawWall(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuint locationNormalMatrix, glm::mat4 MVMat){
 
   glBindVertexArray(this->vao);
   
-  MVMatrix = glm::translate (glm::mat4(1.f), glm::vec3(0.f,0.f,-5.f));
-  MVMatrix = glm::rotate(MVMatrix, 45.f, glm::vec3(0, 0, 1));
-  
-  //MVMatrix = glm::rotate(MVMatrix, window.getTime(), glm::vec3(0, 1, 0));
+  MVMatrix = MVMat;
 
   glUniformMatrix4fv(locationMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
   glUniformMatrix4fv(locationMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
@@ -227,4 +228,27 @@ void WallDraw::drawWall(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuin
 
   glBindVertexArray(0);
 
+}
+
+PathDraw::PathDraw(){
+}
+
+PathDraw::~PathDraw(){
+}
+
+void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuint locationNormalMatrix, Level level){
+	glm::mat4 MVMat = glm::mat4(1.f);
+	int test = 0;
+	for (int i=0 ; i<(int)level.map.size() ; i++){
+		if (level.map[i].type == 1){
+			test++;
+			WallDraw path;
+			int translateZ = level.begin.position.x - level.map[i].position.x;
+			int translateX = level.begin.position.y - level.map[i].position.y;
+			//std::cout << "Z = " << translateZ << ", X = " << translateX << std::endl;
+			MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,-0.5f,translateZ));
+			MVMat = glm::rotate(MVMat, 90.f, glm::vec3(1, 0, 0));
+			path.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
+		}
+	}
 }

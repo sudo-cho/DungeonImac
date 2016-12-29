@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <glimac/common.hpp>
 #include <glimac/Sphere.hpp>
+#include "level.hpp"
 
 using namespace glimac;
 
@@ -35,5 +36,13 @@ public:
   WallDraw();
   ~WallDraw();
 
-  void drawWall(GLuint, GLuint, GLuint);
+  void drawWall(GLuint, GLuint, GLuint, glm::mat4);
+};
+
+class PathDraw{
+public: 
+	PathDraw();
+	~PathDraw();
+	
+	void drawPath(GLuint, GLuint, GLuint, Level);
 };

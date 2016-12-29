@@ -38,9 +38,9 @@ int main(int argc, char *argv[])
 
 	for (int i=0; i<(int)level.monsters.size(); i++){
 		cout << level.monsters[i].type.name << endl;
-	}
+	}*/
 
-	level.printLevelTest();*/
+	//level.printLevelTest();
 	
 	glEnable(GL_DEPTH_TEST);
 
@@ -48,12 +48,13 @@ int main(int argc, char *argv[])
 
   GLuint locationMVPMatrix = 0, locationMVMatrix = 0, locationNormalMatrix = 0;
 
-  game.initProgram(&program, locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
+  game.initProgram(&program, &locationMVPMatrix, &locationMVMatrix, &locationNormalMatrix);
 
   // Sphere sphere(1, 32, 16);
   // SphereDraw objectSphere(&sphere);
 
-  WallDraw objectwall;
+  //WallDraw wall1;
+  PathDraw path;
 
 	bool _continue = true;
 	while(_continue){
@@ -67,8 +68,13 @@ int main(int argc, char *argv[])
     /* game draw objects*/
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	/*
+	glm::mat4 MVMat = glm::translate (glm::mat4(1.f), glm::vec3(0.f,-1.f,-2.f));
+	MVMat = glm::rotate(MVMat, 90.f, glm::vec3(1, 0, 0));
 
-    wall1.drawWall(locationMVPMatrix, locationMVMatrix, locationNormalMatrix);
+    wall1.drawWall(locationMVPMatrix, locationMVMatrix, locationNormalMatrix, MVMat);*/
+	
+	path.drawPath(locationMVPMatrix, locationMVMatrix, locationNormalMatrix, level);
 
     SDL_Delay(1000/60);
 		SDL_GL_SwapWindow(game.window);

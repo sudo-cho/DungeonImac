@@ -115,9 +115,9 @@ void Level::readImageFile(string imageFile){
 			map.push_back(Case(glm::vec2(row,col), out));
 			end = Case(glm::vec2(row,col),out);
 		}
-		col = (n-row)/(width);
 		if (row == width -1) row = 0;
 		else row++;
+		col = (n-row)/(width-1);
 	}
 	
 	this->width = width;
