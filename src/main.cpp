@@ -12,6 +12,7 @@
 #include "game.hpp"
 #include "draw.hpp"
 #include "player.hpp"
+#include "camera.hpp"
 
 using namespace std;
 using namespace glimac;
@@ -49,6 +50,8 @@ int main(int argc, char *argv[])
   GLuint locationMVPMatrix = 0, locationMVMatrix = 0, locationNormalMatrix = 0;
 
   game.initProgram(&program, &locationMVPMatrix, &locationMVMatrix, &locationNormalMatrix);
+  
+  Camera camera(glm::vec2(level.begin.position.x, level.begin.position.y));
 
   // Sphere sphere(1, 32, 16);
   // SphereDraw objectSphere(&sphere);
@@ -64,6 +67,32 @@ int main(int argc, char *argv[])
 				_continue = false; // Leave the loop after this iteration
 			}
 		}
+		
+	if (GetAsyncKeyState(VK_UP) < 0){
+		if (level.getCaseFromPos(glm::vec2(camera.position.x +1, camera.position.y)).type == 1) {
+			camera.position.x += 1;
+			Sleep(100);
+		}
+	}
+	else if (GetAsyncKeyState(VK_DOWN) < 0){
+		if (level.getCaseFromPos(glm::vec2(camera.position.x -1, camera.position.y)).type == 1) {
+			camera.position.x -= 1;
+			Sleep(100);
+		}
+	}
+	else if (GetAsyncKeyState(VK_LEFT) < 0){
+		if (level.getCaseFromPos(glm::vec2(camera.position.x, camera.position.y -1)).type == 1) {
+			camera.position.y -= 1;
+			Sleep(100);
+		}
+	}
+	else if (GetAsyncKeyState(VK_RIGHT) < 0){
+		if (level.getCaseFromPos(glm::vec2(camera.position.x, camera.position.y +1)).type == 1) {
+			camera.position.y += 1;
+			Sleep(100);
+		}
+	}
+	
 
     /* game draw objects*/
 
@@ -74,7 +103,7 @@ int main(int argc, char *argv[])
 
     wall1.drawWall(locationMVPMatrix, locationMVMatrix, locationNormalMatrix, MVMat);*/
 	
-	path.drawPath(locationMVPMatrix, locationMVMatrix, locationNormalMatrix, level);
+	path.drawPath(locationMVPMatrix, locationMVMatrix, locationNormalMatrix, level, camera);
 
     SDL_Delay(1000/60);
 		SDL_GL_SwapWindow(game.window);

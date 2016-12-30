@@ -5,6 +5,7 @@
 #include <glimac/common.hpp>
 #include <glimac/Sphere.hpp>
 #include "level.hpp"
+#include "camera.hpp"
 
 using namespace glimac;
 
@@ -44,5 +45,5 @@ public:
 	PathDraw();
 	~PathDraw();
 	
-	void drawPath(GLuint, GLuint, GLuint, Level);
+	void drawPath(GLuint, GLuint, GLuint, Level, Camera);
 };

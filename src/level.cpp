@@ -130,3 +130,11 @@ void Level::printLevelTest(){
 		if (map[n].position.x == width-1) cout << endl;
 	}
 }
+
+Case Level::getCaseFromPos(glm::vec2 pos){
+	Case caseNull;
+	for (int n=0 ; n < (int)map.size() ; n++){
+		if (map[n].position.x == pos.x && map[n].position.y == pos.y) return map[n];
+	}
+	return caseNull;
+}

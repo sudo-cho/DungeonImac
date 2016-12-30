@@ -27,5 +27,6 @@ public:
 	std::vector<Case> map;
 	std::vector<Monster> monsters;
 	std::vector<Chest> chests;
+	Case getCaseFromPos(glm::vec2);
 	//Trap[] traps;
 };

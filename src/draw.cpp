@@ -117,26 +117,11 @@ SphereDraw::SphereDraw(Sphere * sphere){
 void SphereDraw::drawSphere(Sphere *sphere, GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuint locationNormalMatrix){
   glBindVertexArray(this->vao);
 
-  glUniformMatrix4fv(
-                     locationMVPMatrix,
-                     1,
-                     GL_FALSE,
-                     glm::value_ptr(MVPMatrix)
-                     );
+  glUniformMatrix4fv(locationMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
 
-  glUniformMatrix4fv(
-                     locationMVMatrix,
-                     1,
-                     GL_FALSE,
-                     glm::value_ptr(this->MVMatrix)
-                     );
+  glUniformMatrix4fv(locationMVMatrix, 1, GL_FALSE, glm::value_ptr(this->MVMatrix));
 
-  glUniformMatrix4fv(
-                     locationNormalMatrix,
-                     1,
-                     GL_FALSE,
-                     glm::value_ptr(this->NormalMatrix)
-                     );
+  glUniformMatrix4fv(locationNormalMatrix, 1, GL_FALSE, glm::value_ptr(this->NormalMatrix));
 
   glDrawArrays(GL_TRIANGLES, 0, sphere->getVertexCount());
   glBindVertexArray(0);
@@ -236,15 +221,16 @@ PathDraw::PathDraw(){
 PathDraw::~PathDraw(){
 }
 
-void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuint locationNormalMatrix, Level level){
+void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuint locationNormalMatrix, Level level, Camera camera){
 	glm::mat4 MVMat = glm::mat4(1.f);
 	int test = 0;
 	for (int i=0 ; i<(int)level.map.size() ; i++){
 		if (level.map[i].type == 1){
 			test++;
 			WallDraw path;
-			int translateZ = level.begin.position.x - level.map[i].position.x;
-			int translateX = level.begin.position.y - level.map[i].position.y;
+			int translateZ = camera.position.x - level.map[i].position.x;
+			int translateX = camera.position.y - level.map[i].position.y;
+			//std::cout << "Z = " << translateZ << ", X = " << translateX << std::endl;
 			MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,-0.5f,translateZ));
 			// rotate 1.5708f : 90 degrés
 			MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(1, 0, 0));
@@ -258,7 +244,7 @@ void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuin
 			}
 			if (level.map[i+1].type == 0){
 				WallDraw pathWall;
-				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ));
+				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ - 0.5f));
 				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
 			}
 			if (level.map[i-level.width].type == 0){
