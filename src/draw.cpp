@@ -230,6 +230,21 @@ void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuin
 			WallDraw path;
 			int translateZ = camera.position.x - level.map[i].position.x;
 			int translateX = camera.position.y - level.map[i].position.y;
+			if (camera.direction == 0){
+				int temp = translateZ;
+				translateZ = -translateX;
+				translateX = temp;
+			}
+			else if (camera.direction == 2){
+				int temp = translateZ;
+				translateZ = translateX;
+				translateX = -temp;
+			}
+			else if (camera.direction == 3){
+				translateZ = -translateZ;
+				translateX = -translateX;
+			}
+			
 			//std::cout << "Z = " << translateZ << ", X = " << translateX << std::endl;
 			MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,-0.5f,translateZ));
 			// rotate 1.5708f : 90 degrés
@@ -239,24 +254,79 @@ void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuin
 			// dessin murs
 			if (level.map[i-1].type == 0){
 				WallDraw pathWall;
-				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ + 0.5f));
+				// direction nord
+				if (camera.direction == 0) {
+					MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX -0.5f,0.f,translateZ));
+					MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				}
+				// direction sud
+				else if (camera.direction == 2) {
+					MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX +0.5f,0.f,translateZ));
+					MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				}
+				// direction est
+				else if (camera.direction == 1) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ + 0.5f));
+				// direction ouest
+				else if (camera.direction == 3) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ - 0.5f));
+				
 				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
 			}
 			if (level.map[i+1].type == 0){
 				WallDraw pathWall;
-				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ - 0.5f));
+				// direction nord
+				if (camera.direction == 0) {
+					MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX + 0.5f,0.f,translateZ));
+					MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				}
+				// direction sud
+				else if (camera.direction == 2) {
+					MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX - 0.5f,0.f,translateZ));
+					MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				}
+				// direction est
+				else if (camera.direction == 1) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ - 0.5f));
+				// direction ouest
+				else if (camera.direction == 3) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ + 0.5f));
+				
 				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
 			}
 			if (level.map[i-level.width].type == 0){
 				WallDraw pathWall;
-				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX - 0.5f,0.f,translateZ));
-				MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				// direction est
+				if (camera.direction == 1) {
+					MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX - 0.5f,0.f,translateZ));
+					MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				}
+				// direction ouest
+				else if (camera.direction == 3) {
+					MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX + 0.5f,0.f,translateZ));
+					MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				}
+				//direction nord
+				else if (camera.direction == 0) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ - 0.5f));
+				//direction sud
+				else if (camera.direction == 2) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ + 0.5f));
+				
 				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
 			}
+			
 			if (level.map[i+level.width].type == 0){
 				WallDraw pathWall;
-				MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX + 0.5f,0.f,translateZ));
-				MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				// direction est
+				if (camera.direction == 1) {
+					MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX + 0.5f,0.f,translateZ));
+					MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				}
+				// direction ouest
+				else if (camera.direction == 3) {
+					MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX - 0.5f,0.f,translateZ));
+					MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(0, 1, 0));
+				}
+				//direction nord
+				else if (camera.direction == 0) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ + 0.5f));
+				//direction sud
+				else if (camera.direction == 2) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ - 0.5f));
+				
 				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
 			}
 		}
