@@ -26,7 +26,7 @@ Level::Level(string fileName){
 	int nLine=0, nObj=0, nLineObj = 0;
 	vector<string> ObjectDetails;
 	int typeMObject;
-	
+
 	while (getline(file,line)){
 		if (nLine == 0) typeMObject = 0;
 		else if (nLine == 1) imageFile = line;
@@ -41,9 +41,9 @@ Level::Level(string fileName){
 		}
 		nLine++;
 	}
-	
+
 	readImageFile(imageFile);
-	
+
 }
 
 Level::~Level(){

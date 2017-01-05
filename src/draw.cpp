@@ -30,11 +30,11 @@ ObjectDraw::ObjectDraw(){
 	glBindVertexArray(this->vao);
 
 	glEnableVertexAttribArray(0);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 	glVertexAttribPointer(0, 2, GL_FLOAT,GL_FALSE, 2 * sizeof(GLfloat), 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
+
 	glBindVertexArray(0);
 
 }
@@ -244,13 +244,11 @@ void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuin
 				translateZ = -translateZ;
 				translateX = -translateX;
 			}
-			
-			//std::cout << "Z = " << translateZ << ", X = " << translateX << std::endl;
+
 			MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,-0.5f,translateZ));
-			// rotate 1.5708f : 90 degrés
 			MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(1, 0, 0));
 			path.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
-			
+
 			// dessin murs
 			if (level.map[i-1].type == 0){
 				WallDraw pathWall;
@@ -268,7 +266,7 @@ void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuin
 				else if (camera.direction == 1) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ + 0.5f));
 				// direction ouest
 				else if (camera.direction == 3) MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,0.f,translateZ - 0.5f));
-				
+
 				pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat);
 			}
 			if (level.map[i+1].type == 0){
