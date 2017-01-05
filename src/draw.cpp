@@ -154,12 +154,16 @@ SphereDraw::~SphereDraw(){
 }
 
 GLuint WallDraw::tex(0);
+GLuint WallDraw::texP(0);
 size_t WallDraw::refcount(0);
 
 WallDraw::WallDraw(){
 
-  if(!refcount)
+  if(!refcount){
     tex = texFromFile("assets/textures/murSimple.png");
+    texP = texFromFile("assets/textures/sol.png");
+  }
+
   ++refcount;
 
   glGenBuffers(1, &this->vbo);
@@ -250,6 +254,29 @@ void WallDraw::drawWall(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuin
   glBindVertexArray(0);
 }
 
+void WallDraw::drawPathWall(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuint locationNormalMatrix, glm::mat4 MVMat, GLint uTexture){
+
+  glBindVertexArray(this->vao);
+
+  MVMatrix = MVMat;
+
+  glUniformMatrix4fv(locationMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
+  glUniformMatrix4fv(locationMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
+  glUniformMatrix4fv(locationNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
+
+  static const size_t TEXUNIT = 0;
+  glUniform1i(uTexture, TEXUNIT);
+  glActiveTexture(GL_TEXTURE0 + TEXUNIT);
+  glBindTexture(GL_TEXTURE_2D, this->texP);
+
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+  glBindTexture(GL_TEXTURE_2D, 0);
+  glActiveTexture(GL_TEXTURE0);
+
+  glBindVertexArray(0);
+}
+
 PathDraw::PathDraw(){
 }
 
@@ -283,7 +310,7 @@ void PathDraw::drawPath(GLuint locationMVPMatrix, GLuint locationMVMatrix, GLuin
 
 			MVMat = glm::translate (glm::mat4(1.f), glm::vec3(-translateX,-0.5f,translateZ));
 			MVMat = glm::rotate(MVMat, 1.5708f, glm::vec3(1, 0, 0));
-			pathWall.drawWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat,uTexture);
+			pathWall.drawPathWall(locationMVPMatrix,locationMVMatrix,locationNormalMatrix,MVMat,uTexture);
 
 			// dessin murs
 			if (level.map[i-1].type == 0){

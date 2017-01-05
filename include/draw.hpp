@@ -39,12 +39,15 @@ public:
   GLuint vbo, vao;
   glm::mat4 ProjMatrix, MVPMatrix, MVMatrix, NormalMatrix;
   static GLuint tex;
+  static GLuint texP;
   static size_t refcount;
 
   WallDraw();
   ~WallDraw();
 
   void drawWall(GLuint, GLuint, GLuint, glm::mat4, GLint);
+  void drawPathWall(GLuint, GLuint, GLuint, glm::mat4, GLint);
+
 };
 
 class PathDraw{
