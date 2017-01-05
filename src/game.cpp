@@ -5,6 +5,7 @@
 #include <glimac/Program.hpp>
 #include <glimac/FilePath.hpp>
 #include <assert.h>
+
 #include "game.hpp"
 
 using namespace glimac;
@@ -39,7 +40,8 @@ Game::~Game(){
 	SDL_Quit();
 }
 
-void Game::initProgram(Program *program, GLuint * locationMVPMatrix,GLuint * locationMVMatrix, GLuint * locationNormalMatrix){
+void Game::initProgram(Program *program, GLuint *locationMVPMatrix, GLuint *locationMVMatrix, GLuint *locationNormalMatrix,GLint *uTexture){
+
   *program = loadProgram(
                          "assets/shaders/3D.vs.glsl",
                          "assets/shaders/normals.fs.glsl"
@@ -49,5 +51,5 @@ void Game::initProgram(Program *program, GLuint * locationMVPMatrix,GLuint * loc
   *locationMVPMatrix = glGetUniformLocation(program->getGLId(), "uMVPMatrix");
   *locationMVMatrix = glGetUniformLocation(program->getGLId(), "uMVMatrix");
   *locationNormalMatrix = glGetUniformLocation(program->getGLId(), "uNormalMatrix");
-
+  *uTexture = glGetUniformLocation(program->getGLId(), "uTexture");
 }

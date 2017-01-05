@@ -2,14 +2,11 @@
 
 in vec3 vPosition_vs;
 in vec3 vNormal_vs;
+uniform sampler2D uTexture;
 in vec2 vTexCoords;
-
 out vec3 fFragColor;
 
 void main() {
   // fFragColor = normalize(vNormal_vs);
-  fFragColor = vec3(1, 1, 1);
-
-    // tout va bien, dans le meilleur des mondes.
-    // fFragColor += 0.0000000000000000000000000001 * vPosition_vs;
+  fFragColor = texture(uTexture, vTexCoords).rgb;
 }

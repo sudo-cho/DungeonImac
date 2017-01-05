@@ -9,6 +9,11 @@
 
 using namespace glimac;
 
+struct Vertex2DUV{
+  glm::vec2 position, texcoords;
+  Vertex2DUV(float x, float y, float u, float v);
+};
+
 class ObjectDraw{
 public:
   GLuint vbo, vao;
@@ -33,17 +38,19 @@ class WallDraw{
 public:
   GLuint vbo, vao;
   glm::mat4 ProjMatrix, MVPMatrix, MVMatrix, NormalMatrix;
+  static GLuint tex;
+  static size_t refcount;
 
   WallDraw();
   ~WallDraw();
 
-  void drawWall(GLuint, GLuint, GLuint, glm::mat4);
+  void drawWall(GLuint, GLuint, GLuint, glm::mat4, GLint);
 };
 
 class PathDraw{
-public: 
+public:
 	PathDraw();
 	~PathDraw();
-	
-	void drawPath(GLuint, GLuint, GLuint, Level, Camera);
+
+	void drawPath(GLuint, GLuint, GLuint, Level, Camera, GLint);
 };

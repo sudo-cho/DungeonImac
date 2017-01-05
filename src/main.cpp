@@ -33,24 +33,16 @@ int main(int argc, char *argv[])
 	Game game;
 
 	Level level((string)"assets/level1.dml");
-	// tests
-	/*
-	cout << level.monsters.size() << endl;
 
-	for (int i=0; i<(int)level.monsters.size(); i++){
-		cout << level.monsters[i].type.name << endl;
-	}*/
-
-	//level.printLevelTest();
-	
 	glEnable(GL_DEPTH_TEST);
 
   Program program;
 
   GLuint locationMVPMatrix = 0, locationMVMatrix = 0, locationNormalMatrix = 0;
+  GLint uTexture = 0;
 
-  game.initProgram(&program, &locationMVPMatrix, &locationMVMatrix, &locationNormalMatrix);
-  
+  game.initProgram(&program, &locationMVPMatrix, &locationMVMatrix, &locationNormalMatrix, &uTexture);
+
   Camera camera(glm::vec2(level.begin.position.x, level.begin.position.y), 1);
 
   // Sphere sphere(1, 32, 16);
@@ -78,8 +70,8 @@ int main(int argc, char *argv[])
 	MVMat = glm::rotate(MVMat, 90.f, glm::vec3(1, 0, 0));
 
     wall1.drawWall(locationMVPMatrix, locationMVMatrix, locationNormalMatrix, MVMat);*/
-	
-	path.drawPath(locationMVPMatrix, locationMVMatrix, locationNormalMatrix, level, camera);
+
+    path.drawPath(locationMVPMatrix, locationMVMatrix, locationNormalMatrix, level, camera, uTexture);
 
     SDL_Delay(1000/60);
 		SDL_GL_SwapWindow(game.window);
